@@ -34,7 +34,7 @@ test:
     - if [ "$DENO_DOM_PLUGIN" != "$PREFIX/lib/deno_dom.dylib" ]; then echo "DENO_DOM_PLUGIN var not set correctly" && exit 1; fi    # [osx]
 
     - IF NOT EXIST %LIBRARY_LIB%\deno_dom.dll exit 1                          # [win]
-    - IF NOT "%DENO_DOM_PLUGIN%" EQUAL "%LIBRARY_LIB%\deno_dom.dll" exit 1    # [win]
+    - IF NOT "%DENO_DOM_PLUGIN:/=\%" EQUAL "%LIBRARY_LIB%\deno_dom.dll" exit 1    # [win]
     - IF NOT "%DENO_DOM_VERSION%" EQUAL "{{ version }}-alpha" exit 1          # [win]
 
 about:
