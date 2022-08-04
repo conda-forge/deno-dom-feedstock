@@ -10,6 +10,7 @@ else
     ext="dylib"
 fi
 
+mkdir -p $PREFIX/lib
 cp target/release/libplugin.$ext $PREFIX/lib/deno_dom.$ext
 
 mkdir -p "${PREFIX}/etc/conda/activate.d"
