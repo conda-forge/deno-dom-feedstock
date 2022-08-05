@@ -10,9 +10,13 @@ else
     ext="dylib"
 fi
 
+mkdir -p $PREFIX/lib
 cp target/release/libplugin.$ext $PREFIX/lib/deno_dom.$ext
 
 mkdir -p "${PREFIX}/etc/conda/activate.d"
+echo "export DENO_DOM_PLUGIN=$PREFIX/lib/deno_dom.$ext" > "${PREFIX}/etc/conda/activate.d/deno_dom.sh"
+echo "export DENO_DOM_VERSION=$PKG_VERSION-alpha" >> "${PREFIX}/etc/conda/activate.d/deno_dom.sh"
+
 mkdir -p "${PREFIX}/etc/conda/deactivate.d"
-echo "export DENO_DOM_PLUGIN=$PREFIX/lib/deno_dom.$ext" > ${PREFIX}/etc/conda/activate.d/deno_dom.sh
-echo "unset DENO_DOM_PLUGIN" > ${PREFIX}/etc/conda/deactivate.d/deno_dom.sh
+echo "unset DENO_DOM_PLUGIN" > "${PREFIX}/etc/conda/deactivate.d/deno_dom.sh"
+echo "unset DENO_DOM_VERSION" >> "${PREFIX}/etc/conda/deactivate.d/deno_dom.sh"

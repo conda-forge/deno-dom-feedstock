@@ -9,4 +9,6 @@ COPY target\release\plugin.dll %LIBRARY_PREFIX%\lib\deno_dom.dll
 MKDIR "%PREFIX%\etc\conda\activate.d"
 MKDIR "%PREFIX%\etc\conda\deactivate.d"
 echo set "DENO_DOM_PLUGIN=%LIBRARY_PREFIX:/=\%\lib\deno_dom.dll" > %PREFIX%\etc\conda\activate.d\deno_dom.bat
+echo set "DENO_DOM_VERSION=%PKG_VERSION%-alpha" >> %PREFIX%\etc\conda\activate.d\deno_dom.bat
 echo set DENO_DOM_PLUGIN= > %PREFIX%\etc\conda\deactivate.d\deno_dom.bat
+echo set DENO_DOM_VERSION= >> %PREFIX%\etc\conda\deactivate.d\deno_dom.bat

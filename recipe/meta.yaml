@@ -1,34 +1,44 @@
 # versions seem to all include "alpha", so I'm leaving that out. You may need to update the URL
 #    below if the project stops including "alpha" on all releases.
-{% set version = "0.1.23" %}
+{% set version = "0.1.33" %}
 
 package:
   name: deno-dom
   version: {{ version }}
 
 source:
-  - url: https://github.com/b-fuze/deno-dom/archive/refs/tags/v{{ version }}-alpha-artifacts.tar.gz
-    sha256: 9eeb81df4e674bb5dea1a371b0e1731b42edd81f212c395e0a25071ac16c27cd
+  - url: https://github.com/b-fuze/deno-dom/archive/refs/tags/v{{ version }}-alpha.tar.gz
+    sha256: 749c3f3f9bba4a32855f52ccc309d8f01c2d2343d94f42196d57b06c3b6903ee
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
     - {{ compiler("c") }}
-    - {{ compiler("cxx") }}
     - cargo-bundle-licenses
     - make   # [unix]
     - rust
+  run:
+    - deno >=1.24.2
 
 test:
-  # TODO: make a simple test using our deno package to verify that it's working correctly
+  files:
+    - test.ts
   commands:
+    - if [ "$DENO_DOM_VERSION" != "{{ version }}-alpha" ]; then echo "DENO_DOM_VERSION not set correctly" && exit 1; fi             # [unix]
+
     - test -f $PREFIX/lib/deno_dom.so                        # [linux]
+    - if [ "$DENO_DOM_PLUGIN" != "$PREFIX/lib/deno_dom.so" ]; then echo "DENO_DOM_PLUGIN var not set correctly" && exit 1; fi       # [linux]
+
     - test -f $PREFIX/lib/deno_dom.dylib                     # [osx]
-    - if [ -z "$DENO_DOM_PLUGIN" ]; then echo "DENO_DOM_PLUGIN var not set correctly" && exit 1; fi                         # [unix]
-    - IF NOT EXIST %LIBRARY_PREFIX%\lib\deno_dom.dll exit 1  # [win]
-    - IF NOT DEFINED DENO_DOM_PLUGIN exit 1                  # [win]
+    - if [ "$DENO_DOM_PLUGIN" != "$PREFIX/lib/deno_dom.dylib" ]; then echo "DENO_DOM_PLUGIN var not set correctly" && exit 1; fi    # [osx]
+
+    - IF NOT EXIST %LIBRARY_LIB%\deno_dom.dll exit 1                              # [win]
+    - IF "%DENO_DOM_PLUGIN:/=\%" NEQ "%LIBRARY_LIB%\deno_dom.dll" exit 1    # [win]
+    - IF "%DENO_DOM_VERSION%" NEQ "{{ version }}-alpha" exit 1              # [win]
+
+    - deno run --unstable --allow-env --allow-ffi test.ts
 
 about:
   home: https://github.com/b-fuze/deno-dom
