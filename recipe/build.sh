@@ -11,7 +11,7 @@ else
 fi
 
 mkdir -p $PREFIX/lib
-cp target/release/libplugin.$ext $PREFIX/lib/deno_dom.$ext
+cp target/$HOST/release/libplugin.$ext $PREFIX/lib/deno_dom.$ext
 
 mkdir -p "${PREFIX}/etc/conda/activate.d"
 echo "export DENO_DOM_PLUGIN=$PREFIX/lib/deno_dom.$ext" > "${PREFIX}/etc/conda/activate.d/deno_dom.sh"
