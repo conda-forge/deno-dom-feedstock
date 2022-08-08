@@ -11,14 +11,13 @@ source:
     sha256: 749c3f3f9bba4a32855f52ccc309d8f01c2d2343d94f42196d57b06c3b6903ee
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
-    - {{ compiler("c") }}
+    - {{ compiler("rust") }}
     - cargo-bundle-licenses
     - make   # [unix]
-    - rust
   run:
     - deno >=1.24.2
 
