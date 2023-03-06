@@ -1,6 +1,6 @@
 # versions seem to all include "alpha", so I'm leaving that out. You may need to update the URL
 #    below if the project stops including "alpha" on all releases.
-{% set version = "0.1.35" %}
+{% set version = "0.1.23" %}
 
 package:
   name: deno-dom
@@ -8,7 +8,7 @@ package:
 
 source:
   - url: https://github.com/b-fuze/deno-dom/archive/refs/tags/v{{ version }}-alpha.tar.gz
-    sha256: 7d99da15734a05972451b57e0bc88eab12463a7110a1a95eceab884e80f7542b
+    sha256: 7dd25e6c9bda18905a084544684dc9edaf56edcc9b42089b652019e147599b04
 
 build:
   number: 0
@@ -37,7 +37,10 @@ test:
     - IF "%DENO_DOM_PLUGIN:/=\%" NEQ "%LIBRARY_LIB%\deno_dom.dll" exit 1    # [win]
     - IF "%DENO_DOM_VERSION%" NEQ "{{ version }}-alpha" exit 1              # [win]
 
-    - deno run --unstable --allow-env --allow-ffi test.ts
+    # We can't run this test. The old deno_dom versions do not pin `plug`, and the API changed at some point.
+    # error: Uncaught SyntaxError: The requested module 'https://deno.land/x/plug/mod.ts' does not provide an export named 'Plug'
+    # import { Plug } from "https://deno.land/x/plug/mod.ts";
+    # - deno run --unstable --allow-env --allow-ffi test_combined.ts
 
 about:
   home: https://github.com/b-fuze/deno-dom
