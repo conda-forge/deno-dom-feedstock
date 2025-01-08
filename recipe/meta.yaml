@@ -1,17 +1,17 @@
 # versions seem to all include "alpha", so I'm leaving that out. You may need to update the URL
 #    below if the project stops including "alpha" on all releases.
-{% set version = "0.1.35" %}
+{% set version = "0.1.41" %}
 
 package:
   name: deno-dom
   version: {{ version }}
 
 source:
-  - url: https://github.com/b-fuze/deno-dom/archive/refs/tags/v{{ version }}-alpha.tar.gz
-    sha256: 7d99da15734a05972451b57e0bc88eab12463a7110a1a95eceab884e80f7542b
+  - url: https://github.com/b-fuze/deno-dom/archive/refs/tags/v{{ version }}.tar.gz
+    sha256: b792b885365b3d40722eb5dab3b774fa9519fc3e14e420532f9b8e24b6358d8b
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
