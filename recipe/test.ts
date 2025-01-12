@@ -1,7 +1,5 @@
-import {
-  DOMParser,
-  Element,
-} from "https://deno.land/x/deno_dom/deno-dom-native.ts";
+import { DOMParser, Element } from "jsr:@b-fuze/deno-dom/native";
+import { assertEquals } from "jsr:@std/assert";
 
 const doc = new DOMParser().parseFromString(
   `
@@ -13,8 +11,8 @@ const doc = new DOMParser().parseFromString(
 
 const p = doc.querySelector("p")!;
 
-console.log(p.textContent); // "Hello from Deno!"
-console.log(p.childNodes[1].textContent); // "Deno!"
+assertEquals(p.textContent, "Hello from Deno!");
+assertEquals(p.childNodes[1].textContent, "Deno!");
 
 p.innerHTML = "DOM in <b>Deno</b> is pretty cool";
-console.log(p.children[0].outerHTML); // "<b>Deno</b>"
+assertEquals(p.children[0].outerHTML, "<b>Deno</b>");

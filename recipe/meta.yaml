@@ -1,21 +1,22 @@
 # versions seem to all include "alpha", so I'm leaving that out. You may need to update the URL
 #    below if the project stops including "alpha" on all releases.
-{% set version = "0.1.35" %}
+{% set version = "0.1.41" %}
 
 package:
   name: deno-dom
   version: {{ version }}
 
 source:
-  - url: https://github.com/b-fuze/deno-dom/archive/refs/tags/v{{ version }}-alpha.tar.gz
-    sha256: 7d99da15734a05972451b57e0bc88eab12463a7110a1a95eceab884e80f7542b
+  - url: https://github.com/b-fuze/deno-dom/archive/refs/tags/v{{ version }}.tar.gz
+    sha256: b792b885365b3d40722eb5dab3b774fa9519fc3e14e420532f9b8e24b6358d8b
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
     - {{ compiler("rust") }}
+    - {{ stdlib("c") }}
     - cargo-bundle-licenses
     - make   # [unix]
   run:
@@ -37,15 +38,7 @@ test:
     - IF "%DENO_DOM_PLUGIN:/=\%" NEQ "%LIBRARY_LIB%\deno_dom.dll" exit 1    # [win]
     - IF "%DENO_DOM_VERSION%" NEQ "{{ version }}-alpha" exit 1              # [win]
 
-    # We can't run this test. The old deno_dom versions (<= 0.1.36) do not pin
-    # `plug`, and the API changed at some point.  error:
-    #     Uncaught SyntaxError: The requested module
-    #     'https://deno.land/x/plug/mod.ts' does not provide an export named
-    #     'Plug'
-    #     import { Plug } from "https://deno.land/x/plug/mod.ts";
-    # Failed build: https://dev.azure.com/conda-forge/feedstock-builds/_build/results?buildId=668906&view=logs&j=58ac6aab-c4bc-5de2-2894-98e408cc8ec9&t=933f325c-924e-533d-4d95-e93b5843ce8b
-    # TODO: Uncomment the below line for deno-dom version 0.1.37 and newer.
-    # - deno run --unstable --allow-env --allow-ffi test.ts
+    - deno run --unstable --allow-env --allow-ffi test.ts
 
 about:
   home: https://github.com/b-fuze/deno-dom
