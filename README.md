@@ -186,5 +186,6 @@ Feedstock Maintainers
 * [@cderv](https://github.com/cderv/)
 * [@cscheid](https://github.com/cscheid/)
 * [@dragonstyle](https://github.com/dragonstyle/)
+* [@mfisher87](https://github.com/mfisher87/)
 * [@msarahan](https://github.com/msarahan/)
 
